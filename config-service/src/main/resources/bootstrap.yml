@@ -6,7 +6,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/jcnapoles/microservices-architecture/tree/master/microservices-architecture
+          uri: https://github.com/jcnapoles/microservices-architecture.git
           searchPaths: config-data
           username: ${GIT_USER}
           password: ${GIT_PASSWORD}
