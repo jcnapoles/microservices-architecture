@@ -12,5 +12,9 @@ import com.acciona.tweetsmanager.model.User;
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
 	public List<Tweet> findByUserAndValidation(User user, Boolean validation);
+	
+	public List<Tweet> findByUser(User user);
+	
+	public List<Tweet> findByValidation(Boolean validation);
 
 }

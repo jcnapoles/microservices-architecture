@@ -15,6 +15,12 @@ public interface TweetService {
 	Tweet updateTweet(Tweet tweet);
 
 	List<Tweet> getTweetValidatedByUser(User user);
+	
+	List<Tweet> getTweetsByUser(User user);
+	
+	List<Tweet> getTweetsByValidation(Boolean validation);
+	
+	List<Tweet> getTweetsByUserAndValidation(User user,Boolean validation);
 
 	Tweet createTweet(Tweet tweet);
 }

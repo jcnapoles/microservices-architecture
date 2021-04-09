@@ -46,29 +46,34 @@ public class TweetRest {
 
 	/*********************** Retrieve All Tweets or By User ***********************/
 	@GetMapping(value = "/tweets")
-	public ResponseEntity<List<Tweet>> getAllTweets(@RequestParam(name = "user", required = false) Long userId) {
-		log.debug("REST request to retrieve validated tweets by user: {}", userId);
+	public ResponseEntity<List<Tweet>> getAllTweets(@RequestParam(name = "user", required = false) Long userId, @RequestParam(name = "validation", required = false) Boolean validation) {
+		log.debug("REST request to retrieve validated tweets by user and validation: {}", userId, validation);
 		List<Tweet> tweets = new ArrayList<Tweet>();
 
-		if (null == userId) {
-			tweets = tweetService.findAllTweets();
-			if (tweets.isEmpty()) {
-				return ResponseEntity.noContent().build();
-			}
+		if (null == userId && null == validation) {
+			tweets = tweetService.findAllTweets();		
 
-		} else {
+		} else if(null == validation) {
 			Optional<User> user = userRepository.findById(userId);
 			if (!user.isPresent()) {
 				return ResponseEntity.noContent().build();
 			} else {
-				tweets = tweetService.getTweetValidatedByUser(user.get());
-				if (tweets.isEmpty()) {
-					return ResponseEntity.noContent().build();
-				}
+				tweets = tweetService.getTweetsByUser(user.get());				
 			}
-
+		} else if(null == userId){
+			tweets = tweetService.getTweetsByValidation(validation);			
+		}else {
+			Optional<User> user = userRepository.findById(userId);
+			if (!user.isPresent()) {
+				return ResponseEntity.noContent().build();
+			} else {
+				tweets = tweetService.getTweetsByUserAndValidation(user.get(), validation);		
+			}
+			
 		}
-
+		if (tweets.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
 		return ResponseEntity.ok(tweets);
 	}
 

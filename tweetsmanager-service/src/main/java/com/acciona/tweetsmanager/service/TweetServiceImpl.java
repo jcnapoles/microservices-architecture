@@ -50,4 +50,19 @@ public class TweetServiceImpl implements TweetService {
 
 	}
 
+	@Override
+	public List<Tweet> getTweetsByUser(User user) {		
+		return tweetRepository.findByUser(user);
+	}
+
+	@Override
+	public List<Tweet> getTweetsByValidation(Boolean validation) {		
+		return tweetRepository.findByValidation(validation);
+	}
+
+	@Override
+	public List<Tweet> getTweetsByUserAndValidation(User user, Boolean validation) {		
+		return tweetRepository.findByUserAndValidation(user, validation);
+	}
+
 }
